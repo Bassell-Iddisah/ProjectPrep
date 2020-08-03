@@ -2,93 +2,80 @@ import time
 import os, os.path as path
 from tkinter import *
 
-file_name_dic= {
-    'flask_files': ["app", "routes", "forms", "models", "__init__", "config", "Details"]
-}
-file_exts_dic= {
-
-    'flask_exts': [".py", ".html"]
-}
 
 class ProPreper:
     def __init__(self):
-        # Set the variable needed
-        #     variables for setting up project folder
-        # self.basedir = str(input('Enter directory: '))
-        # self.project_name = str(input('Enter the name of your project: '))
-        # self.description = str(input('Enter project description: '))
-        # #   variables for setting up project files
-        # self.file_names = ['Details', self.project_name]
-        # self.extensions = ['.txt', '.py']
-        # #   variables will be used for testing
-        # os.chdir(self.basedir)
-        # print('Current Working Directory: ', os.getcwd())
-        self.list_of_folders = []
+        self.basedir = str(input('Enter project directory: '))
+        self.list_of_folders = list(os.listdir(self.basedir))
         self.no_of_folders = len(self.list_of_folders)
-        self.description = ''
+
+        # this is just by the way
+        self.file_names = ['project', 'Description']
+        self.extensions = ['.py', '.txt']
         print('')
+        os.chdir(self.basedir)
+        self.find_new_folder()
 
-        self.create_project_folder()
-
-    # def find_new_folder(self):
-    #     while True:
-    #         list_folders = os.listdir()
-    #         # Test for if there is a new folder
-    #         if len(os.listdir()) > self.no_of_folders:
-    #             # find that new folder
-    #             for item in list_folders:
-    #                 if item in self.list_of_folders:
-    #                     pass
-    #                 else:
-    #                     time.sleep(3)
-    #                     # Has found the new folder.
-    #                    # Have a pop up tkinter window to enable developer input project details.
-    #                     if item == "New Folder":
-    #                         # os.rename(item, self.project_name)
-    #                         print(f'New Project found: {item}')
-    #                         print('')
-    #                         self.list_of_folders.append(item)
-    #                         # this should be equal to the tkinter entry
-    #                         description = str(input('Enter the description of this coming project: '))
-    #                         self.create_files_needed(item, description)
-    #                         print(f"{item} has been successfully added ")
-    #                         break
+    def find_new_folder(self):
+        while True:
+            list_folders = os.listdir()
+            # Test for if there is a new folder
+            if len(os.listdir()) > self.no_of_folders:
+                # find that new folder
+                for item in list_folders:
+                    if item in self.list_of_folders:
+                        pass
+                    else:
+                        # Has found the new folder.
+                       # Have a pop up tkinter window to enable developer input project details.
+                        if item == "New folder":
+                            pass
+                        else:
+                            print(f'New Project found: {item}')
+                            # print('')
+                            self.list_of_folders.append(item)
+                            # this should be equal to the tkinter entry
+                            self.create_files_needed(item)
+                            print(f"{item} has been successfully added ")
+                            break
+                        break
 
 
+    def create_files_needed(self, item):
+        # Take description of the project
+        description = str(input('What is this project supposed to do?: '))
+        # Must take final input from tkinter GUI
+        # Creating new file path
+        os.chdir(item)
+        name_list = [item, 'Description']
+        ext_list = ['py', 'txt']
 
-    # def create_project_folder(self):
-    #     # Creating the project folder
-    #     if self.project_name in os.listdir():
-    #         self.project_name = str(input('folder already exists, please give a new name: '))
-    #         self.create_files_needed(self.description)
-    #     else:
-    #         os.mkdir(path.join(self.basedir, self.project_name))
-    # #     Move into project dir and create all the files needed
-    #     os.chdir(self.project_name)
-    #     print(os.getcwd())
-    #     self.create_files_needed(self.description)
-    #     return 0
+        for filename, extension in zip(name_list, ext_list):
+            creation_path = path.join(os.getcwd(), f'{filename}.{extension}')
+            with open(creation_path, 'w') as file:
+                file.write('')
+            with open('Description.txt', 'w') as file:
+                file.write(description)
 
-    # def create_files_needed(self, description):
-    #     # Creating new file path
-    #     for files, extensions in zip(self.file_names, self.extensions):
-    #         new_path = path.join(os.getcwd(), files+extensions)
-    #         # Creating the new files
-    #         with open(new_path, 'w') as file:
-    #             file.write(f'{description}')
-    #         with open(new_path, 'w') as file:
-    #             file.write(f"{description}")
-    #     os.chdir(self.basedir)
-    #     print(os.getcwd())
-    #     return 0
+
+        # for files, extensions in zip(self.file_names, self.extensions):
+        #     new_path = path.join(os.getcwd(), files+extensions)
+        #     # Creating the new files
+        #     with open(new_path, 'w') as file:
+        #         file.write('')
+        #     with open(new_path, 'w') as file:
+        #         file.write(f"{description}")
+        os.chdir(self.basedir)
+        print(f'Returned to {os.getcwd()}')
+        return 0
 
     # This method finds out if a file has been deleted and then removes it from index.
-    # def take_away_form_indexing(self):
-    #     # first detect and locate deleted file by filename
-    #     pass
+    def take_away_form_indexing(self):
+        # first detect and locate deleted file by filename
+        pass
 
 
-ProPreper().collect_details()
+ProPreper()
 
 
 # There can be a list of filenames and another list of file extentions from which the project names will be derived.
