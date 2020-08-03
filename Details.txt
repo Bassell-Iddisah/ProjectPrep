@@ -1,0 +1,18 @@
+Whenever a new folder is made in the git repo, the script will set up all the files and folders that need to be available.
+
+What is needed?
+
+1. Details.txt
+2. Project Name
+3. Description
+4. Packages Used
+5. venv?
+6. project directory on start up
+
+
+
+#########  This will also take some keywords from user, suggest the packages that need to be installed for the project and
+ then install them ##################
+
+python will take in the user input
+using subprocesses, create a venv and install all needed packages
