@@ -1,7 +1,7 @@
 from tkinter import *
 root = Tk()
 root.title('New Project Detected')
-root.geometry('300x300')
+root.geometry('500x500')
 
 
 def printing():
@@ -19,9 +19,9 @@ def collect_details():
     submit = Button(root, text='Create Project')
 
     # Pack all def widgets
-    title.grid(padx=5, row=0, sticky=EW, bg=)
-    name_label.grid(column=0, row=2)
-    project_name.grid(column=0, row=3)
+    title.grid()
+    name_label.grid(column=0, row=5, sticky=W)
+    # project_name.pack()
     # description.grid()
     # E_description.grid()
     # packages_list.grid()
