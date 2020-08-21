@@ -1,8 +1,7 @@
 import os, os.path as path
 import time
 
-basedir = str(input('Enter project directory: '))
-basedir = basedir.replace("\ ", "/") if "\ " in basedir else basedir
+basedir = str(input('Enter project directory: ')).replace("\ ", "/")
 
 
 class ProPreper:
@@ -40,9 +39,10 @@ class ProPreper:
                             # this should be equal to the tkinter entry
                             self.create_files_needed(item)
                             print(f"{item} has been successfully added ")
+                            self.no_of_folders += 1
                             break
                         break
-            else:
+            elif self.no_of_folders > len(os.listdir()):
                 self.delete_deleted_project()
 
     # Create all files neded for the project
@@ -72,14 +72,14 @@ class ProPreper:
             if len(os.listdir()) < self.no_of_folders:
                 time.sleep(0.1)
                 no_of_removed_projects = self.no_of_folders - len(os.listdir())
-                print(f"{no_of_removed_projects} projects have been removed.")
+                print(f"Number of projects removed: {no_of_removed_projects}")
                 print("Refreshing project index")
-                ProPreper().delete_deleted_project()
+                ProPreper()
             else:
                 pass
 
 
-ProPreper().delete_deleted_project()
+ProPreper()
 
 # There can be a list of filenames and another list of file extentions from which the project names will be derived.
 # {
