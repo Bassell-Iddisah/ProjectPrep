@@ -1,17 +1,20 @@
 import os, os.path as path
+import time
+
+basedir = str(input('Enter project directory: '))
+basedir = basedir.replace("\ ", "/") if "\ " in basedir else basedir
 
 
 class ProPreper:
     # Define primary variables
     def __init__(self):
-        self.basedir = str(input('Enter project directory: '))
-        self.refferal, self.reffered = os.listdir(self.basedir), os.listdir(self.basedir)
+        self.refferal, self.reffered = os.listdir(basedir), os.listdir(basedir)
         self.no_of_folders = len(self.refferal)
         # this is just by the way
         self.file_names = ['project', 'Description']
         self.extensions = ['.py', '.txt']
         print('')
-        os.chdir(self.basedir)
+        os.chdir(basedir)
         print(os.getcwd())
         self.find_new_folder()
 
@@ -27,7 +30,7 @@ class ProPreper:
                         pass
                     else:
                         # Has found the new folder.
-                       # Have a pop up tkinter window to enable developer input project details.
+                        # Have a pop up tkinter window to enable developer input project details.
                         if item == "New folder":
                             pass
                         else:
@@ -39,6 +42,8 @@ class ProPreper:
                             print(f"{item} has been successfully added ")
                             break
                         break
+            else:
+                self.delete_deleted_project()
 
     # Create all files neded for the project
     def create_files_needed(self, item):
@@ -56,20 +61,29 @@ class ProPreper:
                 file.write('')
             with open('Description.txt', 'w') as file:
                 file.write(description)
-        os.chdir(self.basedir)
+        os.chdir(basedir)
         print(f'Returned to {os.getcwd()}')
         return 0
 
-    # This method finds out if a file has been deleted and then removes it from index.
+    # This method finds out if a file has been deleted and then refreshes project index.
     def delete_deleted_project(self):
-        pass
+        while True:
+            # Test for a missing folder
+            if len(os.listdir()) < self.no_of_folders:
+                time.sleep(0.1)
+                no_of_removed_projects = self.no_of_folders - len(os.listdir())
+                print(f"{no_of_removed_projects} projects have been removed.")
+                print("Refreshing project index")
+                ProPreper().delete_deleted_project()
+            else:
+                pass
 
-ProPreper()
 
+ProPreper().delete_deleted_project()
 
 # There can be a list of filenames and another list of file extentions from which the project names will be derived.
 # {
 # *************  POSSIBLE FUNCTIONALITIES  *************
-# 1. User enters language of project and that languag's file is created
+# 1. User enters language of project and that languag's file is created 
 # 2. App will be part of startup windows applications
 # 3. Functionality to monitor entire drives} #
