@@ -12,9 +12,11 @@ class ProPreper:
         # this is just by the way
         self.file_names = ['project', 'Description']
         self.extensions = ['.py', '.txt']
+        self.deleted = []
         print('')
         os.chdir(basedir)
         print(os.getcwd())
+        print()
         self.find_new_folder()
 
     # Detect when a new folder is created
@@ -34,11 +36,12 @@ class ProPreper:
                             pass
                         else:
                             print(f'New Project found: {item}')
-                            # print('')
+                            print()
                             self.refferal.append(item)
                             # this should be equal to the tkinter entry
                             self.create_files_needed(item)
                             print(f"{item} has been successfully added ")
+                            print()
                             self.no_of_folders += 1
                             break
                         break
@@ -49,6 +52,7 @@ class ProPreper:
     def create_files_needed(self, item):
         # Take description of the project
         description = str(input('What is this project supposed to do?: '))
+        print()
         # Must take final input from tkinter GUI
         # Creating new file path
         os.chdir(item)
@@ -63,17 +67,29 @@ class ProPreper:
                 file.write(description)
         os.chdir(basedir)
         print(f'Returned to {os.getcwd()}')
+        print()
         return 0
 
     # This method finds out if a file has been deleted and then refreshes project index.
     def delete_deleted_project(self):
+        deleted = []
         while True:
             # Test for a missing folder
             if len(os.listdir()) < self.no_of_folders:
                 time.sleep(0.1)
                 no_of_removed_projects = self.no_of_folders - len(os.listdir())
-                print(f"Number of projects removed: {no_of_removed_projects}")
+                print(f"Projects removed: {no_of_removed_projects}")
+                print()
+                for project in os.listdir():
+                    if project in self.refferal:
+                        pass
+                    else:
+                        deleted += str(project)
+                print(f"list of deleted projects;")
+                print()
+                print(deleted)
                 print("Refreshing project index")
+                print()
                 ProPreper()
             else:
                 pass
@@ -81,9 +97,9 @@ class ProPreper:
 
 ProPreper()
 
-# There can be a list of filenames and another list of file extentions from which the project names will be derived.
+# There can be a list of filenames and another list of file extentions from which the project files will be derived.
 # {
 # *************  POSSIBLE FUNCTIONALITIES  *************
 # 1. User enters language of project and that languag's file is created 
 # 2. App will be part of startup windows applications
-# 3. Functionality to monitor entire drives} #
+# 3. Functionality to monitor entire project directories} #
