@@ -29,37 +29,40 @@ class ProPreper():
 
     # Detect when a new folder is created
     def find_new_folder(self):
-        print("method: find_new_folder")
-        while len(self.refferal) != len(os.listdir()):
-            list_folders = os.listdir()
-            # Test for if there is a new folder
-            if len(os.listdir()) > self.no_of_folders:
-                # find that new folder
-                for item in list_folders:
-                    if item in self.refferal:
-                        pass
-                    else:
-                        # Has found the new folder.
-                        # Have a pop up tkinter window to enable developer input project details.
-                        if item in to_pass:
+        if len(self.refferal) != len(os.listdir()):
+            while len(self.refferal) != len(os.listdir()):
+                print("method: find_new_folder")
+                list_folders = os.listdir()
+                # New folder found
+                if len(os.listdir()) > self.no_of_folders:
+                    # Identify new folder
+                    for item in list_folders:
+                        if item in self.refferal:
                             pass
                         else:
-                            print(f'New Project found: {item}')
-                            print()
-                            self.refferal.append(item)
-                            # this should be equal to the tkinter entry
-                            self.create_files_needed(item, basedir)
-                            print(f"{item} has been successfully added ")
-                            print()
-                            self.no_of_folders += 1
+                            # Has found the new folder.
+                            # Have a pop up tkinter window to enable developer input project details.
+                            if item in to_pass:
+                                pass
+                            else:
+                                print(f'New Project found: {item}')
+                                print()
+                                self.refferal.append(item)
+                                # this should be equal to the tkinter entry
+                                self.create_files_needed(item, basedir)
+                                print(f"{item} has been successfully added ")
+                                print()
+                                self.no_of_folders += 1
+                                break
                             break
-                        break
-            elif self.no_of_folders > len(os.listdir()):
-                self.delete_deleted_project()
-            else:
-                return 0
+                # elif self.no_of_folders > len(os.listdir()):
+                #     self.delete_deleted_project()
+                else:
+                    self.delete_deleted_project()
+        else:
+            self.delete_deleted_project()
 
-    # Create all files neded for the project
+    # Create all files needed for the project
     def create_files_needed(self, item, basedir):
         print("method: create_files_needed")
         # Take description of the project
@@ -109,13 +112,14 @@ class ProPreper():
                 return 0
 
 
-for basedir in dir_list:
-    ProPreper(basedir)
-    time.sleep(1)
+while True:
+    for basedir in dir_list:
+        ProPreper(basedir)
+        time.sleep(3)
+
 
 # There can be a list of filenames and another list of file extentions from which the project files will be derived.
-# {
 # *************  POSSIBLE FUNCTIONALITIES  *************
 # 1. User enters language of project and that languag's file is created 
 # 2. App will be part of startup windows applications
-# 3. Functionality to monitor entire project directories} #
+# 3. Functionality to monitor entire project directories}  (Applied) #
