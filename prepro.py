@@ -3,71 +3,66 @@ import time
 
 to_pass = ["venv", "env", "clone-env", "__pycache__", ".git",
            ".idea", "Styling Garlore", "globalenv", "Image files",
-           "Lessons", "Other files", "None", "none", "New folder"]
+           "Lessons", "Other files", "None", "New folder"]
 
-dir_list = ["F:/Works/__Name__Main/Python/Beginners_Level",
-            "F:/Works/__Name__Main/Python/Advanced_Level",
-            "F:/Works/__Name__Main/Python/Intermediate_Level",
-            "F:/Works/__Professional",
-            "F:/Works/Final-Year-Project"]
+project_dir_list = [
+        "F:/Works/__Name__Main/Python/Beginners_Level",
+        "F:/Works/__Name__Main/Python/Intermediate_Level",
+        "F:/Works/__Name__Main/Python/Advanced_Level",
+        "F:/Works/__Professional",
+        "F:/Works/Final-Year-Project"
+    ]
 
 
-class ProPreper():
+class ProPreper:
     # Define primary variables
-    def __init__(self, basedir):
-        self.refferal, self.reffered = os.listdir(basedir), os.listdir(basedir)
-        self.no_of_folders = len(self.refferal)
-        # this is just by the way
-        self.file_names = ['project', 'Description']
-        self.extensions = ['.py', '.txt']
-        self.deleted = []
-        print('')
-        os.chdir(basedir)
-        print(os.getcwd())
-        print()
-        self.find_new_folder()
+    def __init__(self):
+        for self.basedir in project_dir_list:
+            self.basedir.replace("\ ", "/")
+            # time.sleep(2.5)
+        # Scan currently active directory and save to list
+            self.definite = os.listdir(self.basedir)
+            self.no_of_folders = len(self.definite)
+            # this is just by the way
+            print('')
+            os.chdir(self.basedir)
+            print("Currently working @: ", os.getcwd())
+            time.sleep(2.3)
+            self.find_new_folder()
 
     # Detect when a new folder is created
     def find_new_folder(self):
-        if len(self.refferal) != len(os.listdir()):
-            while len(self.refferal) != len(os.listdir()):
-                print("method: find_new_folder")
-                list_folders = os.listdir()
-                # New folder found
-                if len(os.listdir()) > self.no_of_folders:
-                    # Identify new folder
-                    for item in list_folders:
-                        if item in self.refferal:
+        if self.no_of_folders != len(os.listdir()):
+        # while True:
+            list_folders = os.listdir()
+            # Test for if there is a new folder
+            if len(os.listdir()) > self.no_of_folders:
+                # find that new folder
+                for item in list_folders:
+                    if item in self.definite:
+                        pass
+                    else:
+                        # Has found the new folder.
+                        # Have a pop up tkinter window to enable developer input project details.
+                        if item in to_pass:
                             pass
                         else:
-                            # Has found the new folder.
-                            # Have a pop up tkinter window to enable developer input project details.
-                            if item in to_pass:
-                                pass
-                            else:
-                                print(f'New Project found: {item}')
-                                print()
-                                self.refferal.append(item)
-                                # this should be equal to the tkinter entry
-                                self.create_files_needed(item, basedir)
-                                print(f"{item} has been successfully added ")
-                                print()
-                                self.no_of_folders += 1
-                                break
-                            break
-                # elif self.no_of_folders > len(os.listdir()):
-                #     self.delete_deleted_project()
-                else:
-                    self.delete_deleted_project()
-        else:
-            self.delete_deleted_project()
+                            print(f'New Project found: {item}')
+                            # # print('')
+                            # self.definite.append(item)
+                            # # this should be equal to the tkinter entry
+                            # self.create_files_needed(item)
+                            # print(f"{item} has been successfully added ")
+                            # self.no_of_folders += 1
+            #   From here test if there is a deleted project and call respective function
+            return 0
+            # elif self.no_of_folders > len(os.listdir()):
+            #     self.delete_deleted_project()
 
-    # Create all files needed for the project
-    def create_files_needed(self, item, basedir):
-        print("method: create_files_needed")
+    # Create all files neded for the project
+    def create_files_needed(self, item):
         # Take description of the project
         description = str(input('What is this project supposed to do?: '))
-        print()
         # Must take final input from tkinter GUI
         # Creating new file path
         os.chdir(item)
@@ -80,46 +75,38 @@ class ProPreper():
                 file.write('')
             with open('Description.txt', 'w') as file:
                 file.write(description)
-        os.chdir(basedir)
+        os.chdir(self.basedir)
         print(f'Returned to {os.getcwd()}')
-        print()
         return 0
 
     # This method finds out if a file has been deleted and then refreshes project index.
     def delete_deleted_project(self):
-        print("method: delete_deleted_project")
-        deleted = []
-        while len(self.refferal) != len(os.listdir()):
+        if len(self.definite) != len(os.listdir()):
             # Test for a missing folder
             if len(os.listdir()) < self.no_of_folders:
                 time.sleep(0.1)
                 no_of_removed_projects = self.no_of_folders - len(os.listdir())
-                print(f"Projects removed: {no_of_removed_projects}")
-                print()
-                for project in os.listdir():
-                    if project in self.refferal:
-                        pass
-                    else:
-                        deleted.append(str(project))
-                print(f"list of deleted projects;")
-                print()
-                for deleted_projects in deleted:
-                    print(deleted_projects)
+                print(f"Number of projects removed: {no_of_removed_projects}")
                 print("Refreshing project index")
-                print()
-                return 0
+                # ProPreper(self.basedir)
             else:
-                return 0
+                pass
 
 
 while True:
-    for basedir in dir_list:
-        ProPreper(basedir)
-        time.sleep(3)
-
+    ProPreper()
+    time.sleep(2.3)
 
 # There can be a list of filenames and another list of file extentions from which the project files will be derived.
 # *************  POSSIBLE FUNCTIONALITIES  *************
 # 1. User enters language of project and that languag's file is created 
 # 2. App will be part of startup windows applications
 # 3. Functionality to monitor entire project directories}  (Applied) #
+
+
+
+
+
+
+# What to do
+# Set the app to move through all derectories and scan them all to find if there is an added folder or a deleted folder
