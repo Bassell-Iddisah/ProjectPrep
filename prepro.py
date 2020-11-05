@@ -16,86 +16,80 @@ project_dir_list = [
 
 class ProPreper:
     # Define primary variables
-    def __init__(self):
-        for self.basedir in project_dir_list:
-            self.basedir.replace("\ ", "/")
-            # time.sleep(2.5)
-        # Scan currently active directory and save to list
-            self.definite = os.listdir(self.basedir)
-            self.no_of_folders = len(self.definite)
-            # this is just by the way
-            print('')
-            os.chdir(self.basedir)
-            print("Currently working @: ", os.getcwd())
-            time.sleep(2.3)
-            self.find_new_folder()
+    def __init__(self, basedir):
+        self.initial_scan = os.listdir(basedir)
+        self.no_of_folders = len(self.initial_scan)
+        # this is just by the way
+        print('')
+        os.chdir(basedir)
+        print(os.getcwd())
+        self.find_new_folder(basedir)
 
     # Detect when a new folder is created
-    def find_new_folder(self):
-        if self.no_of_folders != len(os.listdir()):
-        # while True:
-            list_folders = os.listdir()
+    def find_new_folder(self, basedir):
+        while True:
             # Test for if there is a new folder
             if len(os.listdir()) > self.no_of_folders:
                 # find that new folder
-                for item in list_folders:
-                    if item in self.definite:
+                for item in os.listdir():
+                    if item in self.initial_scan:
                         pass
                     else:
                         # Has found the new folder.
                         # Have a pop up tkinter window to enable developer input project details.
-                        if item in to_pass:
+                        if item == "New folder":
                             pass
                         else:
                             print(f'New Project found: {item}')
-                            # # print('')
-                            # self.definite.append(item)
-                            # # this should be equal to the tkinter entry
-                            # self.create_files_needed(item)
-                            # print(f"{item} has been successfully added ")
+                            # print('')
+                            # self.initial_scan.append(item)
+                            # this should be equal to the tkinter entry
+                            # self.create_files_needed(item, basedir)
+                            print(f"{item} has been successfully added ")
                             # self.no_of_folders += 1
-            #   From here test if there is a deleted project and call respective function
-            return 0
+                            break
+                        break
+            else:
+                print('No new thing')
+            time.sleep(2)
             # elif self.no_of_folders > len(os.listdir()):
             #     self.delete_deleted_project()
+    # # Create all files neded for the project
+    # def create_files_needed(self, item, basedir):
+    #     # Take description of the project
+    #     description = str(input('What is this project supposed to do?: '))
+    #     # Must take final input from tkinter GUI
+    #     # Creating new file path
+    #     os.chdir(item)
+    #     name_list = [item, 'Description']
+    #     ext_list = ['py', 'txt']
+    #
+    #     for filename, extension in zip(name_list, ext_list):
+    #         creation_path = path.join(os.getcwd(), f'{filename}.{extension}')
+    #         with open(creation_path, 'w') as file:
+    #             file.write('')
+    #         with open('Description.txt', 'w') as file:
+    #             file.write(description)
+    #     os.chdir(basedir)
+    #     print(f'Returned to {os.getcwd()}')
+    #     return 0
+    #
+    # # This method finds out if a file has been deleted and then refreshes project index.
+    # def delete_deleted_project(self):
+    #     while True:
+    #         # Test for a missing folder
+    #         if len(os.listdir()) < self.no_of_folders:
+    #             time.sleep(0.1)
+    #             no_of_removed_projects = self.no_of_folders - len(os.listdir())
+    #             print(f"Number of projects removed: {no_of_removed_projects}")
+    #             print("Refreshing project index")
+    #             ProPreper(basedir)
+    #         else:
+    #             pass
 
-    # Create all files neded for the project
-    def create_files_needed(self, item):
-        # Take description of the project
-        description = str(input('What is this project supposed to do?: '))
-        # Must take final input from tkinter GUI
-        # Creating new file path
-        os.chdir(item)
-        name_list = [item, 'Description']
-        ext_list = ['py', 'txt']
 
-        for filename, extension in zip(name_list, ext_list):
-            creation_path = path.join(os.getcwd(), f'{filename}.{extension}')
-            with open(creation_path, 'w') as file:
-                file.write('')
-            with open('Description.txt', 'w') as file:
-                file.write(description)
-        os.chdir(self.basedir)
-        print(f'Returned to {os.getcwd()}')
-        return 0
-
-    # This method finds out if a file has been deleted and then refreshes project index.
-    def delete_deleted_project(self):
-        if len(self.definite) != len(os.listdir()):
-            # Test for a missing folder
-            if len(os.listdir()) < self.no_of_folders:
-                time.sleep(0.1)
-                no_of_removed_projects = self.no_of_folders - len(os.listdir())
-                print(f"Number of projects removed: {no_of_removed_projects}")
-                print("Refreshing project index")
-                # ProPreper(self.basedir)
-            else:
-                pass
-
-
-while True:
-    ProPreper()
-    time.sleep(2.3)
+for basedir in project_dir_list:
+    ProPreper(basedir.replace('\ ', '/'))
 
 # There can be a list of filenames and another list of file extentions from which the project files will be derived.
 # *************  POSSIBLE FUNCTIONALITIES  *************
