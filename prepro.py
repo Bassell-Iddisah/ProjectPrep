@@ -1,7 +1,7 @@
 import os, os.path as path
 import time
 
-basedir = str(input('Enter project directory: ')).replace("\ ", "/")
+basedir = "C:/Users/Bassell Iddisah/Projects" #str(input('Enter project directory: ')).replace("\ ", "/")
 
 
 class ProPreper:
@@ -43,7 +43,7 @@ class ProPreper:
                             break
                         break
             elif self.no_of_folders > len(os.listdir()):
-                self.delete_deleted_project()
+                self.delete_deleted_project(item)
 
     # Create all files neded for the project
     def create_files_needed(self, item):
@@ -66,12 +66,13 @@ class ProPreper:
         return 0
 
     # This method finds out if a file has been deleted and then refreshes project index.
-    def delete_deleted_project(self):
+    def delete_deleted_project(self, item):
         while True:
             # Test for a missing folder
             if len(os.listdir()) < self.no_of_folders:
                 time.sleep(0.1)
                 no_of_removed_projects = self.no_of_folders - len(os.listdir())
+                print(f"Project removed: {item}")
                 print(f"Number of projects removed: {no_of_removed_projects}")
                 print("Refreshing project index")
                 ProPreper()
